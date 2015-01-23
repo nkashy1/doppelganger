@@ -1,2 +1,6 @@
 # mockingbird
-Mock objects, quick and easy.
+
+Simple mock objects.
+
+- - -
+
