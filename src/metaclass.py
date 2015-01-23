@@ -62,6 +62,8 @@ class Mock(type):
         return attribute_dictionary
     
     
+    # An attribute is magical if and only if it has two leading underscores followed by a non-underscore character
+    # and two trailing underscores preceded by a non-underscore character.
     @classmethod
     def is_magic_attribute(self, name):
         if len(name) < 4:
