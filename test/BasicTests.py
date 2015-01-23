@@ -83,6 +83,48 @@ class MockingbirdTest(unittest.TestCase):
         self.assertEqual(mock_object.method(), return_string)
     
     
+    def test_create_mock_function(self):
+        mock_function_return_value = 0
+        mock_function = mockingbird.create_mock_function(mock_function_return_value)
+        self.assertEqual(mock_function(), mock_function_return_value)
+    
+    
+    def test_mock_method(self):
+        mock_object = self.make_mock_object()
+        
+        mock_method_return_value = 'rofl'
+        mockingbird.mock_method(mock_object, 'method', mock_method_return_value)
+        
+        self.assertEqual(mock_object.method(), mock_method_return_value)
+    
+    
+    def test_is_magic_attribute(self):
+        is_magic_attribute = mockingbird.Mock.is_magic_attribute
+        self.assertFalse(is_magic_attribute('lol'))
+        self.assertTrue(is_magic_attribute('__class__'))
+        self.assertFalse(is_magic_attribute('___three_underscores___'))
+        self.assertTrue(is_magic_attribute('__name_with_underscores__'))
+    
+    
+    def test_make_magic_attributes_untouchable_unless_explicitly_touchable(self):
+        mock_class = self.make_mock_class()
+        attribute_names = ['nonmagical_attribute', '__magic_attribute__']
+        mock_class.make_magic_attributes_untouchable_unless_explicitly_touchable(attribute_names)
+        self.assertIn('__magic_attribute__', mock_class.untouchable_attributes)
+    
+    
+    def test_declare_touchable(self):
+        mock_class = self.make_mock_class()
+        mock_class.declare_untouchable('method')
+        mock_class.declare_touchable('method')
+        mock_object = mock_class()
+        self.assertIsNone(mock_object.method)
+        
+        mock_class.declare_untouchable('method')
+        mock_object = mock_class()
+        self.assertIsNotNone(mock_object.method)
+    
+    
     def make_true_object(self):
         true_object = self.TrueClass()
         return true_object
