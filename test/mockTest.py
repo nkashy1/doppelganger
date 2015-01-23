@@ -42,12 +42,12 @@ class MockTest(unittest.TestCase):
     
     def test_mock_object_member(self):
         mock_object = self.make_mock_object()
-        self.assertIsNone(mock_object.member())
+        self.assertIsNone(mock_object.member)
     
     
     def test_mock_object_method(self):
         mock_object = self.make_mock_object()
-        self.assertIsNone(mock_object.method())
+        self.assertIsNone(mock_object.method)
     
     
     def test_mock_object_invalid_descriptor(self):
@@ -60,14 +60,14 @@ class MockTest(unittest.TestCase):
         true_object = self.make_true_object()
         mock_object = self.make_mock_object_with_the_following_untouchable_attributes(['member'])
         self.assertEqual(mock_object.member, true_object.member)
-        self.assertIsNone(mock_object.method())
+        self.assertIsNone(mock_object.method)
     
     
     def test_mock_object_with_untouched_method(self):
         true_object = self.make_true_object()
         mock_object = self.make_mock_object_with_the_following_untouchable_attributes(['method'])
         self.assertEqual(mock_object.method(), true_object.method())
-        self.assertIsNone(mock_object.member())
+        self.assertIsNone(mock_object.member)
     
     
     def test_mock_object_with_untouched_member_and_method(self):

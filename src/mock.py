@@ -7,10 +7,6 @@ import inspect
 
 
 
-def empty_function(*args, **kwargs):
-    return None
-
-
 class Mock(type):
     
     def __init__(self, name, bases, dct):
@@ -36,7 +32,7 @@ class Mock(type):
     def clear_attributes(self, self_instance, attribute_names):
         for name in attribute_names:
             if not (name in self.forbidden_attributes):
-                object.__setattr__(self_instance, name, empty_function.__get__(self, self_instance))
+                object.__setattr__(self_instance, name, None)
     
     
     def declare_untouchable(self, attribute_name):
