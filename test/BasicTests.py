@@ -24,10 +24,6 @@ class MockingbirdTest(unittest.TestCase):
             return 'lol'
     
     
-    def setUp(self):
-        self.mocking_attributes = ['__metaclass__', 'forbidden_attributes']
-    
-    
     def test_mock_object_attribute_names(self):
         mock_object = self.make_mock_object()
         
