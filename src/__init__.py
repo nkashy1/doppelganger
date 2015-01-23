@@ -1,1 +1,1 @@
-from mock import Mock
+from metaclass import Mock

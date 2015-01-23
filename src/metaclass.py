@@ -10,7 +10,7 @@ import inspect
 class Mock(type):
     
     def __init__(self, name, bases, dct):
-        self.forbidden_attributes = ['__module__', '__subclasshook__', '__class__', '__dict__', '__weakref__']
+        self.untouchable_attributes = ['__module__', '__subclasshook__', '__class__', '__dict__', '__weakref__', '__metaclass__']
         
         self.base = bases[0]
         if hasattr(self.base, '__metaclass__'):
@@ -31,12 +31,12 @@ class Mock(type):
     
     def clear_attributes(self, self_instance, attribute_names):
         for name in attribute_names:
-            if not (name in self.forbidden_attributes):
+            if not (name in self.untouchable_attributes):
                 object.__setattr__(self_instance, name, None)
     
     
     def declare_untouchable(self, attribute_name):
-        self.forbidden_attributes.append(attribute_name)
+        self.untouchable_attributes.append(attribute_name)
     
     
     def retrieve_attribute_dictionary(self, obj):
