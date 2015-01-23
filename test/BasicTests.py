@@ -15,7 +15,7 @@ import inspect
 
 # TEST CASES
 
-class MockTest(unittest.TestCase):
+class MockingbirdTest(unittest.TestCase):
     
     class TrueClass(object):
         member = 0
@@ -77,6 +77,16 @@ class MockTest(unittest.TestCase):
         self.assertEqual(mock_object.method(), true_object.method())
     
     
+    def test_monkey_patch(self):
+        mock_object = self.make_mock_object()
+        
+        return_string = 'rofl'
+        mock_method = lambda self: return_string
+        mockingbird.monkey_patch(mock_object, 'method', mock_method)
+        
+        self.assertEqual(mock_object.method(), return_string)
+    
+    
     def make_true_object(self):
         true_object = self.TrueClass()
         return true_object
@@ -112,7 +122,7 @@ class MockTest(unittest.TestCase):
 # TEST SUITE
 
 if __name__ == '__main__':
-    cases = (MockTest,)
+    cases = (MockingbirdTest,)
     
     suite = unittest.TestSuite()
     

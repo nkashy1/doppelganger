@@ -25,6 +25,7 @@ class Mock(type):
         attribute_names = self_instance_dictionary.keys()
         
         self.clear_attributes(self_instance, attribute_names)
+        print 'metaclass call'
         
         return self_instance
     
