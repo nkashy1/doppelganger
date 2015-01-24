@@ -1,6 +1,6 @@
 # doppelganger
 
-Simple fake objects.
+Simple object doubles.
 
 - - -
 
