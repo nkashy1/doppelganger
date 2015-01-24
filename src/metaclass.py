@@ -53,7 +53,7 @@ class Mock(type):
     
     def make_magic_attributes_untouchable_unless_explicitly_touchable(self, attribute_names):
         for attribute_name in attribute_names:
-            if (not attribute_name in self.explicitly_touchable_attributes) and self.is_magic_attribute(attribute_name):
+            if (not (attribute_name in self.explicitly_touchable_attributes)) and self.is_magic_attribute(attribute_name):
                 self.declare_untouchable(attribute_name)
     
     
