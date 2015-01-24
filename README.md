@@ -13,6 +13,6 @@ $ python setup.py install
 
 - - -
 
-### Examples
+### Guides
 
-+ [Simple unit testing with doppelganger](docs/simpletests.md)
++ [Simple Unit Tests](docs/simpletests.md)
