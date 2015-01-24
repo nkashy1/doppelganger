@@ -86,7 +86,7 @@ class doppelgangerTest(unittest.TestCase):
     def test_create_fake_returner(self):
         fake_function_return_value = 0
         fake_function = doppelganger.tools.create_fake_returner(fake_function_return_value)
-        self.assertEqual(fake_function(), fake_function_return_value)
+        self.assertEqual(fake_function(None), fake_function_return_value)
     
     
     def test_patch_returner(self):
@@ -128,8 +128,8 @@ class doppelgangerTest(unittest.TestCase):
     def test_create_fake_caller(self):
         function_to_call = lambda x, y: x + 1
         input_values = (10, 20)
-        fake_caller = doppelganger.tools.create_fake_caller(function_to_call, *input_values)
-        self.assertEqual(fake_caller(), input_values[0] + 1)
+        fake_caller = doppelganger.tools.create_fake_caller(function_to_call)
+        self.assertEqual(fake_caller(None, *input_values), input_values[0] + 1)
     
     
     def test_patch_caller(self):
@@ -138,10 +138,10 @@ class doppelgangerTest(unittest.TestCase):
         second_argument = 1.1
         
         fake_object = self.make_fake_object()
-        doppelganger.tools.patch_caller(fake_object, 'method', function_to_call, first_argument, second_argument)
+        doppelganger.tools.patch_caller(fake_object, 'method', function_to_call)
         
         true_value = first_argument + second_argument
-        self.assertEqual(fake_object.method(), true_value)
+        self.assertEqual(fake_object.method(first_argument, second_argument), true_value)
     
     
     def make_true_object(self):

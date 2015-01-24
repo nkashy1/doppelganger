@@ -22,14 +22,14 @@ def monkey_patch(obj, name, function):
 
 
 def create_fake_returner(fake_returner_return_value):
-    def fake_returner(*method_args, **method_kwargs):
+    def fake_returner(self, *method_args, **method_kwargs):
         return fake_returner_return_value
     
     return fake_returner
 
 
-def create_fake_caller(function_to_call, *args, **kwargs):
-    def fake_caller(*method_args, **method_kwargs):
-        return function_to_call(*args, **kwargs)
+def create_fake_caller(function_to_call):
+    def fake_caller(self, *method_args, **method_kwargs):
+        return function_to_call(*method_args, **method_kwargs)
     
     return fake_caller
