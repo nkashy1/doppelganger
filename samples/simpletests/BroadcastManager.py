@@ -65,3 +65,14 @@ class Receiver(object):
     
     def receive(self, message):
         pass
+
+
+class NamedBroadcaster(Broadcaster):
+    def __init__(self, handle = 'bob'):
+        self.handle = handle
+
+
+class AdvancedBroadcastManager(BroadcastManager):
+    def broadcast(self, obj, message):
+        new_message = obj.handle + ': ' + message
+        super(AdvancedBroadcastManager, self).broadcast(obj, new_message)

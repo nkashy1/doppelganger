@@ -4,6 +4,63 @@ import doppelganger
 import BroadcastManager
 
 
+class ExampleTest1(unittest.TestCase):
+    def setUp(self):
+        self.broadcast_manager = BroadcastManager.BroadcastManager()
+        
+        class FakeBroadcaster(BroadcastManager.Broadcaster):
+            __metaclass__ = doppelganger.Doppel
+        
+        self.fake_broadcaster_class = FakeBroadcaster
+        
+        class FakeReceiver(BroadcastManager.Receiver):
+            __metaclass__ = doppelganger.Doppel
+        
+        self.fake_receiver_class = FakeReceiver
+        
+        self.message = 'lol'
+        self.message_received = 'lol'
+    
+    
+    def test_broadcast(self):
+        def fake_broadcast(obj, message):
+            self.broadcast_manager.broadcast(obj, message)
+        
+        broadcaster = self.fake_broadcaster_class()
+        doppelganger.tools.monkey_patch(broadcaster, 'broadcast', fake_broadcast)
+        
+        def fake_receive(obj, message):
+            self.assertEqual(message, self.message_received)
+        
+        receiver = self.fake_receiver_class()
+        doppelganger.tools.monkey_patch(receiver, 'receive', fake_receive)
+        # An alternative which doesn't require the definition of 'fake_receive' is:
+        # doppelganger.tools.patch_caller(receiver, 'receive', lambda message: self.assertEqual(message, self.message_received))
+        
+        self.broadcast_manager.broadcasters.append(broadcaster)
+        self.broadcast_manager.receivers.append(receiver)
+        broadcaster.broadcast(self.message)
+
+
+class ExampleTest2(ExampleTest1):
+    def setUp(self):
+        self.broadcast_manager = BroadcastManager.AdvancedBroadcastManager()
+        
+        class FakeBroadcaster(BroadcastManager.NamedBroadcaster):
+            __metaclass__ = doppelganger.Doppel
+        
+        self.fake_broadcaster_class = FakeBroadcaster
+        self.fake_broadcaster_class.declare_untouchable('handle')
+        
+        class FakeReceiver(BroadcastManager.Receiver):
+            __metaclass__ = doppelganger.Doppel
+        
+        self.fake_receiver_class = FakeReceiver
+        
+        self.message = 'lol'
+        self.message_received = 'bob: lol'
+
+
 class BroadcastManagerTest(unittest.TestCase):
     
     class FakeBroadcaster(BroadcastManager.Broadcaster):
@@ -159,7 +216,7 @@ class BroadcastManagerTest(unittest.TestCase):
 # TEST RUNNER
 
 if __name__ == '__main__':
-    cases = (BroadcastManagerTest,)
+    cases = (BroadcastManagerTest, ExampleTest1, ExampleTest2)
     
     suite = unittest.TestSuite()
     
