@@ -78,22 +78,22 @@ class doppelgangerTest(unittest.TestCase):
         
         return_string = 'rofl'
         fake_method = lambda self: return_string
-        doppelganger.monkey_patch(fake_object, 'method', fake_method)
+        doppelganger.tools.monkey_patch(fake_object, 'method', fake_method)
         
         self.assertEqual(fake_object.method(), return_string)
     
     
-    def test_create_fake_function(self):
+    def test_create_fake_returner(self):
         fake_function_return_value = 0
-        fake_function = doppelganger.create_fake_function(fake_function_return_value)
+        fake_function = doppelganger.tools.create_fake_returner(fake_function_return_value)
         self.assertEqual(fake_function(), fake_function_return_value)
     
     
-    def test_fake_method(self):
+    def test_patch_returner(self):
         fake_object = self.make_fake_object()
         
         fake_method_return_value = 'rofl'
-        doppelganger.fake_method(fake_object, 'method', fake_method_return_value)
+        doppelganger.tools.patch_returner(fake_object, 'method', fake_method_return_value)
         
         self.assertEqual(fake_object.method(), fake_method_return_value)
     
@@ -123,6 +123,25 @@ class doppelgangerTest(unittest.TestCase):
         fake_class.declare_untouchable('method')
         fake_object = fake_class()
         self.assertIsNotNone(fake_object.method)
+    
+    
+    def test_create_fake_caller(self):
+        function_to_call = lambda x, y: x + 1
+        input_values = (10, 20)
+        fake_caller = doppelganger.tools.create_fake_caller(function_to_call, *input_values)
+        self.assertEqual(fake_caller(), input_values[0] + 1)
+    
+    
+    def test_patch_caller(self):
+        function_to_call = lambda x, y: x + y
+        first_argument = 10
+        second_argument = 1.1
+        
+        fake_object = self.make_fake_object()
+        doppelganger.tools.patch_caller(fake_object, 'method', function_to_call, first_argument, second_argument)
+        
+        true_value = first_argument + second_argument
+        self.assertEqual(fake_object.method(), true_value)
     
     
     def make_true_object(self):
