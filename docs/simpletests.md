@@ -40,6 +40,7 @@ import BroadcastManager
 ```
 
 We can now define and set up our test case:
+```
 class ExampleTest1(unittest.TestCase):
     def setUp(self):
         self.broadcast_manager = BroadcastManager.BroadcastManager()
