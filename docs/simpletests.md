@@ -56,7 +56,7 @@ class ExampleTest1(unittest.TestCase):
         self.fake_receiver_class = FakeReceiver
         
         self.message = 'lol'
-		self.message_received = 'lol'
+	self.message_received = 'lol'
 ```
 
 `self.broadcast_manager` is the `BroadcastManager` instance that will be the target of the test. `self.message` is the message that will be transmitted. The real work here is being done to define the `self.fake_broadcaster_class` and `self.fake_receiver_class` classes. Let us consider the `self.fake_broadcaster_class` definition. It starts by defining the `FakeBroadcaster` class:
@@ -98,7 +98,7 @@ def test_broadcast(self):
 The real test is in these four lines of code:
 ```
 def fake_receive(obj, message):
-	self.assertEqual(message, self.message)
+	self.assertEqual(message, self.message_received)
 
 receiver = self.fake_receiver_class()
 doppelganger.tools.monkey_patch(receiver, 'receive', fake_receive)
