@@ -7,7 +7,7 @@ import inspect
 
 
 
-class Mock(type):
+class Fake(type):
     
     def __init__(self, name, bases, dct):
         self.untouchable_attributes = []

@@ -1,6 +1,6 @@
-# mockingbird
+# doppelganger
 
-Simple mock objects.
+Simple fake objects.
 
 - - -
 

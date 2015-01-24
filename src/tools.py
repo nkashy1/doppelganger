@@ -6,9 +6,9 @@
 
 
 
-def mock_method(obj, name, mock_method_return_value):
-    mock_function = create_mock_function(mock_method_return_value)
-    monkey_patch(obj, name, mock_function)
+def fake_method(obj, name, fake_method_return_value):
+    fake_function = create_fake_function(fake_method_return_value)
+    monkey_patch(obj, name, fake_function)
 
 
 def monkey_patch(obj, name, function):
@@ -16,8 +16,8 @@ def monkey_patch(obj, name, function):
     setattr(obj, name, bound_method)
 
 
-def create_mock_function(mock_function_return_value):
-    def mock_function(*args, **kwargs):
-        return mock_function_return_value
+def create_fake_function(fake_function_return_value):
+    def fake_function(*args, **kwargs):
+        return fake_function_return_value
     
-    return mock_function
+    return fake_function
