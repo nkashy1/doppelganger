@@ -99,7 +99,7 @@ class doppelgangerTest(unittest.TestCase):
     
     
     def test_is_magic_attribute(self):
-        is_magic_attribute = doppelganger.Fake.is_magic_attribute
+        is_magic_attribute = doppelganger.Doppel.is_magic_attribute
         self.assertFalse(is_magic_attribute('lol'))
         self.assertTrue(is_magic_attribute('__class__'))
         self.assertFalse(is_magic_attribute('___three_underscores___'))
@@ -145,7 +145,7 @@ class doppelgangerTest(unittest.TestCase):
     
     def make_fake_class(self):
         class fakeClass(self.TrueClass):
-            __metaclass__ = doppelganger.Fake
+            __metaclass__ = doppelganger.Doppel
         
         return fakeClass
     

@@ -7,7 +7,7 @@ import inspect
 
 
 
-class Fake(type):
+class Doppel(type):
     
     def __init__(self, name, bases, dct):
         self.untouchable_attributes = []
